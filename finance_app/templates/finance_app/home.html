@@ -1,0 +1,37 @@
+{% extends "finance_app/base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <h1 class="text-4xl font-extrabold text-secondary-900 sm:text-5xl sm:tracking-tight lg:text-6xl text-center mb-8">Welcome to Quantum Bull</h1>
+    <p class="text-xl text-secondary-500 text-center mb-12">Empower your investment decisions with AI-driven stock predictions</p>
+    <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-2">
+        <a href="{% url 'fetch_stock_data' %}" class="bg-white overflow-hidden shadow-custom rounded-lg hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-secondary-900 mb-2">Fetch Stock Data</h2>
+                <p class="text-secondary-500">Retrieve the latest market data for your analysis.</p>
+            </div>
+        </a>
+        <a href="{% url 'backtest_view' %}" class="bg-white overflow-hidden shadow-custom rounded-lg hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-secondary-900 mb-2">Run Backtest</h2>
+                <p class="text-secondary-500">Test your strategies using historical data.</p>
+            </div>
+        </a>
+        <a href="{% url 'predict_stock_prices' %}" class="bg-white overflow-hidden shadow-custom rounded-lg hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-secondary-900 mb-2">Predict Stock Prices</h2>
+                <p class="text-secondary-500">Get AI-powered future stock price predictions.</p>
+            </div>
+        </a>
+        <a href="{% url 'generate_report' %}" class="bg-white overflow-hidden shadow-custom rounded-lg hover:shadow-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+            <div class="p-6">
+                <h2 class="text-2xl font-semibold text-secondary-900 mb-2">Generate Report</h2>
+                <p class="text-secondary-500">Create a comprehensive performance report.</p>
+            </div>
+        </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends "finance_app/base.html" %}
+
+{% block title %}Fetch Stock Data{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-center text-primary-800">Fetch Stock Data</h1>
+    <form method="POST" class="space-y-4">
+        {% csrf_token %}
+        <div>
+            <label for="symbol" class="block text-sm font-medium text-gray-700">Stock Symbol</label>
+            <input type="text" name="symbol" id="symbol" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-primary-500 focus:ring-primary-500">
+        </div>
+        <button type="submit" class="w-full bg-primary-600 text-white py-3 px-4 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition duration-300">
+            Fetch Data
+        </button>
+    </form>
+</div>
+{% endblock %}

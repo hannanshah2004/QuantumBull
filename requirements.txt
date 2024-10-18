@@ -1,0 +1,11 @@
+Django>=3.2,<4.0    
+requests
+psycopg2-binary
+pandas
+numpy
+scikit-learn
+matplotlib
+reportlab
+gunicorn
+pmdarima
+joblib
