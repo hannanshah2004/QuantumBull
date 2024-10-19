@@ -41,7 +41,7 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
             echo "Connected to EC2, building Docker image locally..."
-            docker build --no-cache -t hannanshah/quantummaze:latest /home/ubuntu/quantummaze/Quantum\\ Bull/
+            docker build --no-cache -t hannanshah/quantummaze:latest /home/ubuntu/quantummaze/Quantum\ Bull/
             echo "Stopping existing container if it exists..."
             docker stop quantumleap || true
             echo "Removing old container if it exists..."
