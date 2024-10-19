@@ -47,7 +47,7 @@ jobs:
           HOSTNAME: 18.118.34.61 
           USERNAME: ubuntu
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          echo "$PRIVATE_KEY" | tr -d '\r' > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
             docker pull hannanshah/quantumbull:${{ github.sha }}
             docker stop crazy_antonelli || true
