@@ -38,7 +38,7 @@ jobs:
       # Step 5: Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t hannanshah/quantumbull:${{ github.sha }} .
+          docker build -t hannanshah/quantummaze:${{ github.sha }} .
 
       # Step 6: Login to DockerHub
       - name: Login to DockerHub
@@ -50,7 +50,7 @@ jobs:
       # Step 7: Push Docker image to DockerHub
       - name: Push Docker image
         run: |
-          docker push hannanshah/quantumbull:${{ github.sha }}
+          docker push hannanshah/quantummaze:${{ github.sha }}
 
       # Step 8: Deploy to EC2 via SSH using the EC2_SSH_KEY from secrets
       - name: Deploy to EC2
@@ -63,12 +63,12 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
             echo "Connected to EC2, executing Docker commands..."
-            docker pull hannanshah/quantumbull:${GITHUB_SHA}
+            docker pull hannanshah/quantummaze:${GITHUB_SHA}
             echo "Stopping existing container if it exists..."
-            docker stop crazy_antonelli || true
+            docker stop quantumleap || true
             echo "Removing old container if it exists..."
-            docker rm crazy_antonelli || true
+            docker rm quantumleap || true
             echo "Running new Docker container..."
-            docker run -d --name crazy_antonelli -p 80:8000 --env-file /home/ubuntu/.env --restart unless-stopped hannanshah/quantumbull:${GITHUB_SHA}
+            docker run -d --name quantumleap -p 80:8000 --env-file /home/ubuntu/.env --restart unless-stopped hannanshah/quantummaze:${GITHUB_SHA}
             echo "Deployment completed!"
           EOF
