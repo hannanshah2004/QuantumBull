@@ -59,8 +59,8 @@ jobs:
           USERNAME: ${{ secrets.EC2_USERNAME }}
         run: |
           echo "Connecting to EC2 instance using Lets.pem and pulling Docker image..."
-          chmod 600 ./Lets.pem
-          ssh -o StrictHostKeyChecking=no -i ./Lets.pem $USERNAME@$HOSTNAME << 'EOF'
+          chmod 600 .github/workflows/Lets.pem
+          ssh -o StrictHostKeyChecking=no -i .github/workflows/Lets.pem $USERNAME@$HOSTNAME << 'EOF'
             echo "Connected to EC2, executing Docker commands..."
             docker pull hannanshah/quantumbull:${GITHUB_SHA}
             echo "Stopping existing container if it exists..."
