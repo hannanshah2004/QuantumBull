@@ -9,12 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-        # Step 8: Set up SSH Agent with the private key
-      - name: Setup SSH Agent
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
-
       # Step 1: Check out the repository
       - name: Check out code
         uses: actions/checkout@v2
@@ -58,15 +52,15 @@ jobs:
         run: |
           docker push hannanshah/quantumbull:${{ github.sha }}
 
-
-      # Step 9: Deploy to EC2 via SSH
+      # Step 8: Deploy to EC2 via SSH using the Lets.pem file
       - name: Deploy to EC2
         env:
           HOSTNAME: ${{ secrets.EC2_HOST }}
           USERNAME: ${{ secrets.EC2_USERNAME }}
         run: |
-          echo "Connecting to EC2 instance and pulling Docker image..."
-          ssh -o StrictHostKeyChecking=no $USERNAME@$HOSTNAME << 'EOF'
+          echo "Connecting to EC2 instance using Lets.pem and pulling Docker image..."
+          chmod 600 ./Lets.pem
+          ssh -o StrictHostKeyChecking=no -i ./Lets.pem $USERNAME@$HOSTNAME << 'EOF'
             echo "Connected to EC2, executing Docker commands..."
             docker pull hannanshah/quantumbull:${GITHUB_SHA}
             echo "Stopping existing container if it exists..."
