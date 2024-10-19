@@ -41,15 +41,14 @@ jobs:
         run: |
           docker push hannanshah/quantumbull:${{ github.sha }}
 
-      - name: Setup SSH
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.EC2_SSH_KEY }}
-          strict_host_key_checking: false
-
-      - name: SSH to EC2 and deploy
+      - name: Deploy to EC2
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          HOSTNAME: ${{ secrets.EC2_HOST }}
+          USERNAME: ubuntu
         run: |
-          ssh ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
             docker pull hannanshah/quantumbull:${{ github.sha }}
             docker stop crazy_antonelli || true
             docker rm crazy_antonelli || true
