@@ -56,7 +56,7 @@ jobs:
       - name: Deploy to EC2
         env:
           HOSTNAME: ${{ secrets.EC2_HOST }}
-          USERNAME: ${{ secrets.EC2_USERNAME }}
+          USERNAME: ubuntu
         run: |
           echo "Connecting to EC2 instance using Lets.pem and pulling Docker image..."
           chmod 600 .github/workflows/Lets.pem
