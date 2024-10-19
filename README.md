@@ -1,2 +1,2 @@
 # Trigger CI
-Quantum Leap Inshallah
+Inshallah
