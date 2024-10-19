@@ -9,6 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+        # Step 8: Set up SSH Agent with the private key
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.5.4
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
       # Step 1: Check out the repository
       - name: Check out code
         uses: actions/checkout@v2
@@ -52,11 +58,6 @@ jobs:
         run: |
           docker push hannanshah/quantumbull:${{ github.sha }}
 
-      # Step 8: Set up SSH Agent with the private key
-      - name: Setup SSH Agent
-        uses: webfactory/ssh-agent@v0.5.4
-        with:
-          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       # Step 9: Deploy to EC2 via SSH
       - name: Deploy to EC2
