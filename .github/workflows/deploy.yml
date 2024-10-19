@@ -9,7 +9,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -19,6 +20,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install numpy==1.21.6
+          pip install Cython
+          pip install pmdarima
           pip install -r requirements.txt
 
       - name: Run Tests
@@ -37,14 +41,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Push Docker image
+        run: |
+          docker push hannanshah/quantumbull:${{ github.sha }}
+
       - name: Deploy to EC2
         env:
           PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          HOSTNAME: 18.118.34.61
-          USERNAME: ubuntu
+          HOSTNAME: ${{ secrets.EC2_HOST }}
+          USERNAME: ${{ secrets.EC2_USERNAME }}
         run: |
           echo "Saving the private key to file and setting permissions..."
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          printf '%b' "$PRIVATE_KEY" > private_key && chmod 600 private_key
           
           echo "Connecting to EC2 instance and pulling Docker image..."
           ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
@@ -55,6 +63,6 @@ jobs:
             echo "Removing old container..."
             docker rm crazy_antonelli || true
             echo "Running new Docker container..."
-            docker run -d --name crazy_antonelli -p 80:8000 --env-file /home/ubuntu/.env hannanshah/quantumbull:${{ github.sha }}
+            docker run -d --name crazy_antonelli -p 80:8000 --env-file /home/ubuntu/.env --restart unless-stopped hannanshah/quantumbull:${{ github.sha }}
             echo "Deployment completed!"
           EOF
