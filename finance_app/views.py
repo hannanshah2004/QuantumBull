@@ -140,15 +140,9 @@ def backtest_view(request):
             data['short_ma'] = data['close_price'].rolling(window=short_window).mean()
             data['long_ma'] = data['close_price'].rolling(window=long_window).mean()
 
-            if data['short_ma'].isnull().all() or data['long_ma'].isnull().all():
-                return render(request, 'finance_app/error.html', {'message': 'Error calculating moving averages'})
-
             # Generate signals
             data['signal'] = 0.0
             valid_indices = data.index[max(short_window, long_window):]
-            if valid_indices.empty:
-                return render(request, 'finance_app/error.html', {'message': 'Insufficient data for signal generation'})
-            
             data.loc[valid_indices, 'signal'] = np.where(
                 data['short_ma'][valid_indices] > data['long_ma'][valid_indices], 1.0, 0.0)
             data['positions'] = data['signal'].diff()
@@ -165,9 +159,6 @@ def backtest_view(request):
             portfolio = positions.multiply(data['close_price'], axis=0)
             portfolio['holdings'] = portfolio.sum(axis=1)
 
-            if portfolio.empty:
-                return render(request, 'finance_app/error.html', {'message': 'Portfolio calculation error'})
-
             # Ensure cash_outflow is float
             cash_outflow = (pos_diff.multiply(data['close_price'], axis=0)).sum(axis=1).cumsum()
             cash_outflow = cash_outflow.astype(float)
@@ -178,9 +169,6 @@ def backtest_view(request):
             # Calculate total portfolio value
             portfolio['total'] = portfolio['cash'] + portfolio['holdings']
             portfolio['returns'] = portfolio['total'].pct_change()
-
-            if portfolio['total'].isnull().all():
-                return render(request, 'finance_app/error.html', {'message': 'Error calculating total portfolio value'})
 
             # Performance metrics
             total_return = (portfolio['total'][-1] - initial_investment) / initial_investment * 100
@@ -198,7 +186,6 @@ def backtest_view(request):
     else:
         form = BacktestForm()
     return render(request, 'finance_app/backtest.html', {'form': form})
-
 
 def predict_stock_prices(request):
     if request.method == 'POST':
