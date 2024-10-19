@@ -52,15 +52,16 @@ jobs:
         run: |
           docker push hannanshah/quantumbull:${{ github.sha }}
 
-      # Step 8: Deploy to EC2 via SSH using the Lets.pem file
+      # Step 8: Deploy to EC2 via SSH using the EC2_SSH_KEY from secrets
       - name: Deploy to EC2
         env:
           HOSTNAME: ${{ secrets.EC2_HOST }}
           USERNAME: ubuntu
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
         run: |
-          echo "Connecting to EC2 instance using Lets.pem and pulling Docker image..."
-          chmod 600 .github/workflows/Lets.pem
-          ssh -o StrictHostKeyChecking=no -i .github/workflows/Lets.pem $USERNAME@$HOSTNAME << 'EOF'
+          echo "Connecting to EC2 instance using the SSH key from GitHub secrets..."
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
             echo "Connected to EC2, executing Docker commands..."
             docker pull hannanshah/quantumbull:${GITHUB_SHA}
             echo "Stopping existing container if it exists..."
