@@ -41,14 +41,17 @@ jobs:
         run: |
           docker push hannanshah/quantumbull:${{ github.sha }}
 
-      - name: SSH into EC2 and deploy
-        uses: garygrossgarten/github-action-ssh@release
+      - name: Setup SSH
+        uses: shimataro/ssh-key-action@v2
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          privateKey: ${{ secrets.EC2_SSH_KEY }}
-          script: |
+          key: ${{ secrets.EC2_SSH_KEY }}
+          known_hosts: ${{ secrets.KNOWN_HOSTS }}
+
+      - name: SSH to EC2 and deploy
+        run: |
+          ssh ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
             docker pull hannanshah/quantumbull:${{ github.sha }}
             docker stop crazy_antonelli || true
             docker rm crazy_antonelli || true
             docker run -d --name crazy_antonelli -p 80:8000 --env-file /home/ubuntu/.env hannanshah/quantumbull:${{ github.sha }}
+          EOF
