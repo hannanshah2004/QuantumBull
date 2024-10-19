@@ -192,7 +192,7 @@ def predict_stock_prices(request):
         # Get the stock symbol from the POST data
         symbol = request.POST.get('symbol', '').upper().strip()
         if not symbol:
-            return render(request, 'finance_app/error.html', {'message': 'Please enter a stock symbol.'})
+            return render(request, 'finance_app/error.html', {'message': 'Please enter stock symbol.'})
 
         predictions_df = get_predicted_prices(symbol)
         if predictions_df is None or predictions_df.empty:
