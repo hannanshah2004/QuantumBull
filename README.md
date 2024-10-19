@@ -1,2 +1,2 @@
 # Trigger CI
-Quantum Leap For Time Forever and Ever Ever Inshallah Inshallah Inshallah Again
+Quantum Leap For Time Forever and Inshallah
