@@ -41,13 +41,13 @@ jobs:
         run: |
           docker push hannanshah/quantumbull:${{ github.sha }}
 
-      - name: SSH to EC2 and deploy
-        uses: appleboy/ssh-action@master
+      - name: SSH into EC2
+        uses: mhausenblas/mkssh-action@v1
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          USER: ubuntu
+          HOST: ${{ secrets.EC2_HOST }}
+          SCRIPT: |
             docker pull hannanshah/quantumbull:${{ github.sha }}
             docker stop crazy_antonelli || true
             docker rm crazy_antonelli || true
