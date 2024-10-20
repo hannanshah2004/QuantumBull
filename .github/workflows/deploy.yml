@@ -47,7 +47,10 @@ jobs:
           chmod 600 private_key
           
           # Transfer code to EC2 using rsync
-          rsync -avz -e "ssh -i private_key -o StrictHostKeyChecking=no" --exclude 'venv/' ./ QuantumBull/ $USERNAME@$HOSTNAME:/home/ubuntu/quantummaze/QuantumBull/
+          rsync -avz -e "ssh -i private_key -o StrictHostKeyChecking=no" \
+            --exclude 'venv/' \
+            --exclude '.git/' \
+            ./ $USERNAME@$HOSTNAME:/home/ubuntu/quantummaze/QuantumBull/
           
           # SSH into EC2 and build & run Docker container
           ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
