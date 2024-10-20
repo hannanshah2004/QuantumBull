@@ -49,13 +49,13 @@ def fetch_stock_data(request):
         if not symbol:
             return render(request, 'finance_app/error.html', {'message': 'Please enter a stock symbol.'})
 
-        function = 'TIME_SERIES_MONTHLY_ADJUSTED'
+        function = 'TIME_SERIES_DAILY'
         api_key = os.environ.get('ALPHA_VANTAGE_API_KEY', 'YOUR_API_KEY')  # Replace 'YOUR_API_KEY' with your actual API key
 
         # Delete existing entries for the symbol in the StockData model
         StockData.objects.filter(symbol=symbol).delete()
 
-        url = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&apikey={api_key}'
+        url = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize=full&apikey={api_key}'
 
         try:
             response = requests.get(url)
@@ -79,12 +79,12 @@ def fetch_stock_data(request):
             error_message = data['Error Message']
             return render(request, 'finance_app/error.html', {'message': error_message})
 
-        if 'Monthly Adjusted Time Series' in data:
-            time_series = data['Monthly Adjusted Time Series']
+        if 'Time Series (Daily)' in data:
+            time_series = data['Time Series (Daily)']
             today_date = timezone.now().date()
             two_years_ago = today_date - timedelta(days=730)
 
-            for date_str, monthly_data in time_series.items():
+            for date_str, daily_data in time_series.items():
                 date = datetime.strptime(date_str, '%Y-%m-%d').date()
 
                 if date > today_date:
@@ -95,13 +95,14 @@ def fetch_stock_data(request):
                         symbol=symbol,
                         date=date,
                         defaults={
-                            'open_price': monthly_data['1. open'],
-                            'high_price': monthly_data['2. high'],
-                            'low_price': monthly_data['3. low'],
-                            'close_price': monthly_data['4. close'],
-                            'adjusted_close_price': monthly_data['5. adjusted close'],
-                            'volume': monthly_data['6. volume'],
-                            'dividend_amount': monthly_data['7. dividend amount'],
+                            'open_price': daily_data['1. open'],
+                            'high_price': daily_data['2. high'],
+                            'low_price': daily_data['3. low'],
+                            'close_price': daily_data['4. close'],
+                            'volume': daily_data['5. volume'],
+                            # Adjusted close price and dividend amount are not available in this endpoint
+                            'adjusted_close_price': None,
+                            'dividend_amount': None,
                         }
                     )
             return render(request, 'finance_app/success.html', {'message': f'Data for {symbol} fetched successfully.'})
