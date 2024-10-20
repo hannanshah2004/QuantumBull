@@ -1,4 +1,4 @@
-# Trigger CI
-Inshallah
+# Quantum Bull Stock Prediction Machine
 
+This
 
