@@ -38,8 +38,8 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense
 
 
-# test test
-
+# test test test
+ 
 
 def home(request):
     return render(request, 'finance_app/home.html')
