@@ -8,6 +8,7 @@ import pickle
 import io
 import base64
 import matplotlib.pyplot as plt
+import tensorflow as tf
 from datetime import datetime, timedelta
 from django.shortcuts import render
 from django.conf import settings
@@ -33,13 +34,16 @@ from reportlab.graphics.widgets.markers import makeMarker
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.graphics.charts.lineplots import LinePlot
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import LSTM, Dense
 
 
+# test test test
+ 
 
 def home(request):
     return render(request, 'finance_app/home.html')
 
-# Fetch financial data from Alpha Vantage and store in the database
 def fetch_stock_data(request):
     if request.method == 'POST':
         # Get the stock symbol from the POST data
@@ -48,13 +52,15 @@ def fetch_stock_data(request):
         if not symbol:
             return render(request, 'finance_app/error.html', {'message': 'Please enter a stock symbol.'})
 
-        function = 'TIME_SERIES_DAILY'
+        # Change the function to TIME_SERIES_MONTHLY
+        function = 'TIME_SERIES_MONTHLY'
         api_key = os.environ.get('ALPHA_VANTAGE_API_KEY', 'YOUR_API_KEY')  # Replace 'YOUR_API_KEY' with your actual API key
 
         # Delete existing entries for the symbol in the StockData model
         StockData.objects.filter(symbol=symbol).delete()
 
-        url = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&outputsize=full&apikey={api_key}'
+        # Update the API URL to use TIME_SERIES_MONTHLY
+        url = f'https://www.alphavantage.co/query?function={function}&symbol={symbol}&apikey={api_key}'
 
         try:
             response = requests.get(url)
@@ -78,12 +84,13 @@ def fetch_stock_data(request):
             error_message = data['Error Message']
             return render(request, 'finance_app/error.html', {'message': error_message})
 
-        if 'Time Series (Daily)' in data:
-            time_series = data['Time Series (Daily)']
+        # Update the key to 'Monthly Time Series'
+        if 'Monthly Time Series' in data:
+            time_series = data['Monthly Time Series']
             today_date = timezone.now().date()
             two_years_ago = today_date - timedelta(days=730)
 
-            for date_str, daily_data in time_series.items():
+            for date_str, monthly_data in time_series.items():
                 date = datetime.strptime(date_str, '%Y-%m-%d').date()
 
                 if date > today_date:
@@ -94,11 +101,11 @@ def fetch_stock_data(request):
                         symbol=symbol,
                         date=date,
                         defaults={
-                            'open_price': daily_data['1. open'],
-                            'high_price': daily_data['2. high'],
-                            'low_price': daily_data['3. low'],
-                            'close_price': daily_data['4. close'],
-                            'volume': daily_data['5. volume'],
+                            'open_price': monthly_data['1. open'],
+                            'high_price': monthly_data['2. high'],
+                            'low_price': monthly_data['3. low'],
+                            'close_price': monthly_data['4. close'],
+                            'volume': monthly_data['5. volume'],
                             # Adjusted close price and dividend amount are not available in this endpoint
                             'adjusted_close_price': None,
                             'dividend_amount': None,
