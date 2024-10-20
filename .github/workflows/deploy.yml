@@ -50,28 +50,29 @@ jobs:
           rsync -avz -e "ssh -i private_key -o StrictHostKeyChecking=no" \
             --exclude 'venv/' \
             --exclude '.git/' \
-            ./ $USERNAME@$HOSTNAME:/home/ubuntu/quantummaze/QuantumBull/
+            ./ QuantumBull/ $USERNAME@$HOSTNAME:/home/ubuntu/quantummaze/QuantumBull/
           
-          # SSH into EC2 and build & run Docker container
+          # SSH into EC2 and perform deployment steps
           ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
-            echo "Connected to EC2, building Docker image locally..."
-            
-            # Navigate to the project directory
-            cd /home/ubuntu/quantummaze/QuantumBull/
-            
-            # Build the Docker image without using the cache to ensure all changes are included
-            docker build --no-cache -t hannanshah/quantummaze:latest .
-            
-            echo "Stopping existing container if it exists..."
+            echo "Connected to EC2, performing cleanup..."
+
+            # Stop and remove existing Docker containers
             docker stop quantumleap || true
-            
-            echo "Removing old container if it exists..."
             docker rm quantumleap || true
-            
+
+            echo "Removing unused Docker images and freeing up space..."
+            docker system prune -a --volumes -f
+
+            echo "Navigating to project directory..."
+            cd /home/ubuntu/quantummaze/QuantumBull/
+
+            echo "Building Docker image without cache..."
+            docker build --no-cache -t hannanshah/quantummaze:latest .
+
             echo "Running new Docker container..."
             docker run -d --name quantumleap -p 80:8000 --env-file /home/ubuntu/.env --restart unless-stopped hannanshah/quantummaze:latest
-            
-            echo "Deployment completed!"
+
+            echo "Deployment completed successfully!"
           EOF
           
           # Clean up the private key file
