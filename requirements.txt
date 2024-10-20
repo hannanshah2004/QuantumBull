@@ -9,4 +9,9 @@ reportlab==4.2.5
 gunicorn==23.0.0
 pmdarima==2.0.4
 joblib==1.4.2
+<<<<<<< HEAD
 tensorflow==2.15.0
+=======
+tensorflow==2.13.0
+
+>>>>>>> 778e7ed0765a38ff541dc9f54bb5156b7e56cb0a

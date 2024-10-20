@@ -8,6 +8,7 @@ import pickle
 import io
 import base64
 import matplotlib.pyplot as plt
+import tensorflow as tf
 from datetime import datetime, timedelta
 from django.shortcuts import render
 from django.conf import settings
@@ -40,7 +41,6 @@ from tensorflow.keras.layers import Dense, LSTM
 def home(request):
     return render(request, 'finance_app/home.html')
 
-# Fetch financial data from Alpha Vantage and store in the database
 def fetch_stock_data(request):
     if request.method == 'POST':
         # Get the stock symbol from the POST data
