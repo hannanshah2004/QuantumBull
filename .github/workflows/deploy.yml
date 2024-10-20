@@ -46,6 +46,6 @@ jobs:
             echo "Removing old container if it exists..."
             docker rm quantumleap || true
             echo "Running new Docker container..."
-            docker run -d --name quantumleap -p 80:8000 --env-file /home/ubuntu/Quantum\ Bull/.env --restart unless-stopped hannanshah/quantummaze:latest
+            docker run -d --name quantumleap -p 80:8000 --env-file /home/ubuntu/.env --restart unless-stopped hannanshah/quantummaze:latest
             echo "Deployment completed!"
           EOF
