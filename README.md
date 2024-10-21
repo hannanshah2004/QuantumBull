@@ -1,4 +1,4 @@
 # Quantum Bull Stock Prediction Machine
 
-This is bed time. Yes.
+This is bed time. Yes. Yes.
 
