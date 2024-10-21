@@ -41,6 +41,9 @@ from tensorflow.keras.layers import Dense, LSTM
 def home(request):
     return render(request, 'finance_app/home.html')
 
+def error(request):
+    return render(request, 'finance_app/error.html')
+
 def fetch_stock_data(request):
     if request.method == 'POST':
         # Get the stock symbol from the POST data
@@ -124,7 +127,7 @@ def backtest_view(request):
             # Fetch data from database
             stock_qs = StockData.objects.filter(symbol=symbol).order_by('date')
             if not stock_qs.exists():
-                return render(request, 'finance_app/error.html', {'message': f"No data found for symbol: {symbol}"})
+                return render(request, 'finance_app/error.html')
 
             data = pd.DataFrame.from_records(stock_qs.values('date', 'close_price'))
             data['date'] = pd.to_datetime(data['date'])

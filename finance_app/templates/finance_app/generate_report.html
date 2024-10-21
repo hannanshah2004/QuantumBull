@@ -3,32 +3,42 @@
 {% block title %}Generate Report{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md text-center">
-    <h1 class="text-3xl font-bold mb-6 text-primary-800">Generate Performance Report</h1>
+<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-6 text-center text-primary-800">Generate Performance Report</h1>
     <form method="post" class="space-y-4">
         {% csrf_token %}
-        <div>
+        <div class="space-y-2">
             <label for="symbol" class="block text-sm font-medium text-gray-700">Stock Symbol</label>
-            <input type="text" name="symbol" id="symbol" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-primary-500 focus:ring-primary-500">
+            <div class="relative">
+                <input type="text" name="symbol" id="symbol" required placeholder="Enter stock symbol" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+            </div>
         </div>
-        <div>
+        <div class="space-y-2">
             <label for="initial_investment" class="block text-sm font-medium text-gray-700">Initial Investment</label>
-            <input type="number" name="initial_investment" id="initial_investment" step="0.01" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-primary-500 focus:ring-primary-500">
+            <div class="relative">
+                <input type="number" name="initial_investment" id="initial_investment" required placeholder="Enter initial investment amount" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+            </div>
         </div>
-        <div>
+        <div class="space-y-2">
             <label for="short_window" class="block text-sm font-medium text-gray-700">Short Term Window</label>
-            <input type="number" name="short_window" id="short_window" min="1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-primary-500 focus:ring-primary-500">
+            <div class="relative">
+                <input type="number" name="short_window" id="short_window" min="1" required placeholder="Enter short term window" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+            </div>
         </div>
-        <div>
+        <div class="space-y-2">
             <label for="long_window" class="block text-sm font-medium text-gray-700">Long Term Window</label>
-            <input type="number" name="long_window" id="long_window" min="1" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-primary-500 focus:ring-primary-500">
+            <div class="relative">
+                <input type="number" name="long_window" id="long_window" min="1" required placeholder="Enter long term window" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+            </div>
         </div>
-        <button type="submit" class="w-full bg-primary-600 text-white py-3 px-4 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition duration-300">
-            Generate Report
+        <button type="submit" class="w-full bg-primary-600 text-white py-3 px-4 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition duration-300" disabled>
+            Submit
         </button>
     </form>
-    <div class="mt-6">
-        <a href="{% url 'home' %}" class="text-primary-600 hover:text-primary-700 transition duration-300">Return to Home</a>
+    <div class="mt-4">
+        <a href="{% url 'home' %}" class="block w-full text-center bg-transparent text-primary-600 py-3 px-4 rounded-md border border-primary-600 hover:bg-primary-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-opacity-50 transition duration-300" disabled>
+            Return to Home
+        </a>
     </div>
 </div>
 {% endblock %}

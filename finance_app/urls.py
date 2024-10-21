@@ -6,4 +6,5 @@ urlpatterns = [
     path('backtest/', views.backtest_view, name='backtest_view'),
     path('predict/', views.predict_stock_prices, name='predict_stock_prices'),
     path('report/', views.generate_report, name='generate_report'),
+    path('error/', views.error, name='error'),  
 ]

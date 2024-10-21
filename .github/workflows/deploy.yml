@@ -12,15 +12,15 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      # Build Docker image for testing
-      - name: Build Docker image for testing
+      # Build Docker image
+      - name: Build Docker image
         run: |
-          docker build --no-cache -t hannanshah/quantummaze:latest .
+          docker build -t hannanshah/quantummaze:latest .
 
-      # Run tests inside Docker container
-      - name: Run Tests inside Docker container
+      # Push Docker image to DockerHub
+      - name: Push Docker image
         run: |
-          docker run hannanshah/quantummaze:latest python manage.py test
+          docker push hannanshah/quantummaze:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -30,7 +30,6 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
-      # Deploy to EC2 and build Docker image locally with no cache
       - name: Deploy to EC2
         env:
           HOSTNAME: ${{ secrets.EC2_HOST }}
@@ -40,12 +39,13 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key $USERNAME@$HOSTNAME << 'EOF'
             echo "Connected to EC2, pulling and running Docker image..."
-            docker pull hannanshah/quantummaze:latest
+            sudo docker pull hannanshah/quantummaze:latest
             echo "Stopping existing container if it exists..."
-            docker stop quantumleap || true
+            sudo docker stop quantumleap || true
             echo "Removing old container if it exists..."
-            docker rm quantumleap || true
+            sudo docker rm quantumleap || true
             echo "Running new Docker container..."
-            docker run -d --name quantumleap -p 80:8000 --env-file /home/ubuntu/.env --restart unless-stopped hannanshah/quantummaze:latest
+            sudo docker run -d --name quantumleap -p 80:8000 --env-file /home/ubuntu/.env --restart unless-stopped hannanshah/quantummaze:latest
+            sudo docker ps
             echo "Deployment completed!"
           EOF

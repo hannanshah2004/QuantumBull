@@ -2,7 +2,8 @@
 FROM python:3.9-slim
 
 # Set environment variables
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED=1
+ENV DOCKER_BUILD=True
 
 # Set the working directory to /code
 WORKDIR /code
@@ -15,6 +16,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the code into the container
 COPY . /code/
+
+# Collect static files
+RUN python manage.py collectstatic --noinput
 
 # Expose port 8000 for the Django app
 EXPOSE 8000
