@@ -46,8 +46,6 @@ The CI/CD pipeline automates deployment to AWS EC2 using Docker. GitHub Actions 
 ## EC2 & RDS Instance Limitations
 Due to memory and computational constraints on the EC2 instance, the full functionality of the application cannot be tested live on the website. However, you can [watch this video](https://www.youtube.com/watch?v=your-video-id) showing the system in action. You can still navigate the website for an overview of the features.
 
-> **To link your YouTube video**, replace `your-video-id` in the above URL with the actual ID from your YouTube video link (e.g., `https://www.youtube.com/watch?v=your-video-id`).
-
 ## Docker Setup
 To run locally:
 ```bash
