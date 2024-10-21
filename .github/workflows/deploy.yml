@@ -15,12 +15,12 @@ jobs:
       # Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t hannanshah/quantummaze:latest .
+          sudo docker build -t hannanshah/quantummaze:latest .
 
       # Push Docker image to DockerHub
       - name: Push Docker image
         run: |
-          docker push hannanshah/quantummaze:latest
+          sudo docker push hannanshah/quantummaze:latest
 
   deploy:
     runs-on: ubuntu-latest
