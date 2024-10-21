@@ -1,6 +1,6 @@
 # QuantumBull
 
-**QuantumBull** is a Django-based backend for fetching, analyzing, and predicting stock market data. It integrates the Alpha Vantage API for data retrieval, TensorFlow's LSTM for price predictions, and Docker for containerized deployment with a CI/CD pipeline via GitHub Actions.
+[QuantumBull](https://thequantumbull.org/) is a Django-based backend for fetching, analyzing, and predicting stock market data. It integrates the Alpha Vantage API for data retrieval, TensorFlow's LSTM for price predictions, and Docker for containerized deployment with a CI/CD pipeline via GitHub Actions.
 
 ## Features
 - **Stock Data Fetching**: Retrieves daily prices via Alpha Vantage API.
@@ -44,7 +44,7 @@
 The CI/CD pipeline automates deployment to AWS EC2 using Docker. GitHub Actions runs tests in containers and deploys the updated app upon successful builds.
 
 ## EC2 & RDS Instance Limitations
-Due to memory and computational constraints on the EC2 instance, the full functionality of the application cannot be tested live on the website. However, you can [watch this video](https://youtu.be/yCL_Q9M3tY4) showing the system in action. You can still navigate the website for an overview of the features at [QuantumBull](https://thequantumbull.org/).
+Due to memory and computational constraints on the EC2 instance, the full functionality of the application cannot be tested live on the website. However, you can [watch this video](https://youtu.be/yCL_Q9M3tY4) showing the system in action. 
 
 ## Docker Setup
 To run locally:
