@@ -1,6 +1,6 @@
-# QuantumMaze
+# QuantumBull
 
-**QuantumMaze** is a Django-based backend for fetching, analyzing, and predicting stock market data. It integrates the Alpha Vantage API for data retrieval, TensorFlow's LSTM for price predictions, and Docker for containerized deployment with a CI/CD pipeline via GitHub Actions.
+**QuantumBull** is a Django-based backend for fetching, analyzing, and predicting stock market data. It integrates the Alpha Vantage API for data retrieval, TensorFlow's LSTM for price predictions, and Docker for containerized deployment with a CI/CD pipeline via GitHub Actions.
 
 ## Features
 - **Stock Data Fetching**: Retrieves daily prices via Alpha Vantage API.
