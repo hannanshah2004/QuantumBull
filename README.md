@@ -8,6 +8,7 @@
 - **Backtesting**: Simulates investment strategies using moving averages.
 - **Price Predictions**: Leverages LSTM for stock price forecasting.
 - **Reports**: Generates PDF and JSON performance reports.
+- **AWS RDS for PostgreSQL**: Uses AWS RDS to store historical stock data and predictions.
 - **CI/CD**: Automated testing and deployment with GitHub Actions.
 
 ## Installation
@@ -20,11 +21,11 @@
     pip install -r requirements.txt
     ```
 
-2. Set up environment variables in a `.env` file:
+2. Set up environment variables in a `.env` file, including your AWS RDS PostgreSQL credentials:
     ```env
     ALPHAVANTAGE_API_KEY=your_api_key
     SECRET_KEY=your_secret_key
-    DATABASE_URL=postgres://user:password@localhost:5432/quantumbull
+    DATABASE_URL=postgres://user:password@rds-instance-url:5432/quantumbull
     ```
 
 3. Apply migrations and start the development server:
@@ -42,8 +43,10 @@
 ## CI/CD Pipeline
 The CI/CD pipeline automates deployment to AWS EC2 using Docker. GitHub Actions runs tests in containers and deploys the updated app upon successful builds.
 
-## EC2 Instance Limitations
-Due to memory and computational constraints on the EC2 instance, the full functionality of the application cannot be tested live on the website. However, you can [watch this video](#) showing the system in action. You can still navigate the website for an overview of the features.
+## EC2 & RDS Instance Limitations
+Due to memory and computational constraints on the EC2 instance, the full functionality of the application cannot be tested live on the website. However, you can [watch this video](https://www.youtube.com/watch?v=your-video-id) showing the system in action. You can still navigate the website for an overview of the features.
+
+> **To link your YouTube video**, replace `your-video-id` in the above URL with the actual ID from your YouTube video link (e.g., `https://www.youtube.com/watch?v=your-video-id`).
 
 ## Docker Setup
 To run locally:
