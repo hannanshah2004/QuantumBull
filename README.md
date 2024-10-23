@@ -12,7 +12,7 @@
 - **CI/CD**: Automated testing and deployment with GitHub Actions.
 
 ## Installation
-1. Clone the repository and set up a virtual environment:
+1. Clone the repository and set up virtual environment:
     ```bash
     git clone https://github.com/hannanshah2004/QuantumBull.git
     cd QuantumBull
@@ -21,7 +21,7 @@
     pip install -r requirements.txt
     ```
 
-2. Set up environment variables in a `.env` file, including your AWS RDS PostgreSQL credentials:
+2. Set up the environment variables in a `.env` file, including your AWS RDS PostgreSQL credentials:
     ```env
     ALPHAVANTAGE_API_KEY=your_api_key
     SECRET_KEY=your_secret_key
