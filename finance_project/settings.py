@@ -51,16 +51,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'finance_project.wsgi.application'
 
 # Database for production (Postgres)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'finance_db',
-        'USER': 'finance_user',
-        'PASSWORD': '786Postgre',
-        'HOST': 'finance-db.c1mic6gas2fk.us-east-2.rds.amazonaws.com',
-        'PORT': '5432',
-    }
-}
+DATABASES = {}
 
 # Use SQLite for Docker build (optional: only needed if you want to collect static files during Docker build)
 if os.getenv('DOCKER_BUILD') == 'True':
