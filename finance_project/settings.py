@@ -80,11 +80,12 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Directory where static files will be collected by collectstatic
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # for production deployment
+
 
 # Include your app's static directories
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'finance_app', 'static', 'finance_app'),
+    BASE_DIR / 'public',  # or wherever your static files are located
 ]
 
 # Default primary key field type
