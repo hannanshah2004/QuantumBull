@@ -1,5 +1,1 @@
-Django==4.2.9          # Django is pure Python, newer stable version
-requests==2.32.3       # Pure Python, current version is fine
-pandas==2.1.2          # Pandas 2.1+ includes wheels for newer Python versions
-numpy==1.26.0          # Numpy 1.26.0 provides wheels for Python 3.12
-gunicorn==23.0.0       # Pure Python, should be fine
+Django==4.2.9
