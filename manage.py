@@ -16,8 +16,8 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-# Define app handler for Vercel
+# Define 'application' variable for Vercel (WSGI entry point)
 if __name__ == "__main__":
     from django.core.wsgi import get_wsgi_application
-    application = get_wsgi_application()  # This is the app variable Vercel needs
+    application = get_wsgi_application()  # Vercel needs this variable to run the app
     main()
