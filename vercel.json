@@ -11,6 +11,11 @@
         "src": "/(.*)",
         "dest": "/manage.py"
       }
-    ]
+    ],
+    "functions": {
+      "api/*.py": {
+        "runtime": "python3.11"
+      }
+    }
   }
   
