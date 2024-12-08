@@ -1,11 +1,11 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Quantum Bull{% endblock %}</title>
-    <link rel="shortcut icon" href="{% static 'bull.ico' %}" type="image/x-icon">
+    <!-- Use the favicon from public directory -->
+    <link rel="shortcut icon" href="/bull.ico" type="image/x-icon">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,7 +41,8 @@
                 </div>
                 <div class="flex-shrink-0 flex items-center">
                     <a href="{% url 'home' %}" class="flex items-center">
-                        <img src="{% static 'bull.jpg' %}" alt="Quantum Bull Logo" class="h-12 w-auto mr-2">
+                        <!-- Use the image from public directory -->
+                        <img src="/bull.jpg" alt="Quantum Bull Logo" class="h-12 w-auto mr-2">
                     </a>
                 </div>
                 <div class="flex-1 flex justify-end">
