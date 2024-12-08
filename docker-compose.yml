@@ -16,15 +16,6 @@ services:
     environment:
       - DEBUG=0  # Set DEBUG to False in production
 
-  db:
-    image: postgres:16
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_DB=finance_db
-      - POSTGRES_USER=finance_user
-      - POSTGRES_PASSWORD=786Postgre
 
 volumes:
-  postgres_data:
   static_volume:  # Static volume to persist static files
