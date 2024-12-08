@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production mode
 SECRET_KEY = 'django-insecure-uj0(7ov0$!a6-!n#ae$lpkr3k#y6able&^kvg0$-ch*vp9a&k_'
 DEBUG = True
-ALLOWED_HOSTS = ['3.143.232.116', 'localhost', 'thequantumbull.org', 'www.thequantumbull.org']
+ALLOWED_HOSTS = ['3.143.232.116', 'localhost', 'thequantumbull.org', 'www.thequantumbull.org', 'quantumbull.vercel.app']
 
 # Application definition
 INSTALLED_APPS = [
