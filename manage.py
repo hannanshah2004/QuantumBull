@@ -3,7 +3,6 @@
 import os
 import sys
 
-
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'finance_project.settings')
@@ -17,6 +16,8 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-
-if __name__ == '__main__':
+# Define app handler for Vercel
+if __name__ == "__main__":
+    from django.core.wsgi import get_wsgi_application
+    application = get_wsgi_application()  # This is the app variable Vercel needs
     main()
