@@ -10,8 +10,9 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('finance/', include('finance_app.urls')),
     
-    # Add this for serving static files in production
-    path('static/<path:path>', serve, {'document_root': settings.STATIC_ROOT}),
+    # Add this to serve static files
+    path('bull.jpg', serve, {'document_root': settings.STATIC_ROOT, 'path': 'bull.jpg'}),
+    path('favicon.ico', serve, {'document_root': settings.STATIC_ROOT, 'path': 'favicon.ico'}),
 ]
 
 # Always add static files, not just in debug mode

@@ -85,6 +85,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'public'),  # or wherever your static files are located
 ]
 
+ALLOWED_HOSTS = ['*']
+
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

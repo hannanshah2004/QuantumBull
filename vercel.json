@@ -16,6 +16,14 @@
   ],
   "routes": [
     {
+      "src": "/bull.jpg",
+      "dest": "staticfiles/bull.jpg"
+    },
+    {
+      "src": "/favicon.ico",
+      "dest": "staticfiles/favicon.ico"
+    },
+    {
       "src": "/static/(.*)",
       "dest": "staticfiles/$1"
     },
