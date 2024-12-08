@@ -1,3 +1,5 @@
+setuptools>=68.0.0
+wheel
 Django==3.2.25
 requests==2.32.3
 pandas==2.0.3
@@ -6,5 +8,3 @@ scikit-learn==1.0.2
 matplotlib==3.5.1
 reportlab==4.2.5
 gunicorn==23.0.0
-joblib==1.4.2
-
